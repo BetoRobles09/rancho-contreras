@@ -5,10 +5,13 @@ import caballoReducer from './caballoReducer'
 import {
   OBTENER_CABALLOS,
   AGREGAR_CABALLO,
-  CABALLO_ACTUAL,
+  CABALLO_ELIMINAR,
   ELIMINAR_CABALLO,
   VALIDAR_FORMULARIO,
-  CABALLO_ERROR
+  CABALLO_ERROR,
+  ACTUALIZAR_CABALLO,
+  CABALLO_ACTUALIZAR,
+  LIMPIAR_CABALLOS
 } from '../../types'
 
 import clienteAxios from '../../config/axios'
@@ -17,6 +20,7 @@ const CaballoState = props => {
   const initialState = {
     caballos : [],
     caballo: null,
+    caballoActualizar: null,
     errorformulario: false,
     mensaje: null
   }
@@ -68,7 +72,7 @@ const CaballoState = props => {
   // Selecciona el Proyecto que el usuario dio click
   const caballoActual = caballoId => {
     dispatch({
-      type: CABALLO_ACTUAL,
+      type: CABALLO_ELIMINAR,
       payload: caballoId
     })
   }
@@ -91,19 +95,48 @@ const CaballoState = props => {
       })
     }
   }
-  
+
+  const actualizarCaballo = async caballo => {
+    try {
+      const resultado = await clienteAxios.put(`/api/caballos/${caballo._id}`, caballo)
+      dispatch({
+        type: ACTUALIZAR_CABALLO,
+        payload: resultado.data.caballo
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const guardarCaballoActual = caballo => {
+    dispatch({
+      type: CABALLO_ACTUALIZAR,
+      payload: caballo
+    })
+  }
+
+  const limpiarCaballo = () => {
+    dispatch({
+      type: LIMPIAR_CABALLOS
+    })
+  }
+
   return (
   <caballoContext.Provider
     value={{
       caballos: state.caballos,
       caballo: state.caballo,
+      caballoActualizar: state.caballoActualizar,
       errorformulario: state.errorformulario,
       mensaje: state.mensaje,
       obtenerCaballos,
       agregarCaballo,
       caballoActual,
       mostrarError,
-      eliminarCaballo
+      eliminarCaballo,
+      actualizarCaballo,
+      guardarCaballoActual,
+      limpiarCaballo
     }}
   >
     {props.children}

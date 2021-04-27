@@ -1,10 +1,13 @@
 import {
   OBTENER_CABALLOS,
   AGREGAR_CABALLO,
-  CABALLO_ACTUAL,
-  ELIMINAR_CABALLO, 
-  CABALLO_ERROR,
+  CABALLO_ELIMINAR,
+  ELIMINAR_CABALLO,
   VALIDAR_FORMULARIO,
+  CABALLO_ERROR,
+  ACTUALIZAR_CABALLO,
+  CABALLO_ACTUALIZAR,
+  LIMPIAR_CABALLOS
 } from '../../types';
 
 // eslint-disable-next-line
@@ -25,7 +28,7 @@ export default (state, action) => {
         ...state, 
         errorformulario: true
       }
-    case CABALLO_ACTUAL:
+    case CABALLO_ELIMINAR:
       return {
         ...state,
         caballo: state.caballo.filter(caballo => caballo._id === action.payload )
@@ -35,6 +38,21 @@ export default (state, action) => {
         ...state,
         caballos: state.caballos.filter(caballo => caballo._id !== action.payload ),
         caballo: null
+      }
+    case ACTUALIZAR_CABALLO:
+      return {
+        ...state,
+        caballos: state.caballos.map(caballo => caballo._id === action.payload._id ? action.payload : caballo )
+      }
+    case CABALLO_ACTUALIZAR:
+      return {
+        ...state,
+        caballoActualizar: action.payload
+      }
+    case LIMPIAR_CABALLOS:
+      return {
+        ...state,
+        caballoActualizar: null
       }
     case CABALLO_ERROR:
       return {

@@ -2,14 +2,14 @@ import { useContext} from 'react'
 import caballoContext from '../../context/caballos/caballoContext'
 import img from '../../img/51253934_10156997144684710_4766564450381594624_n.jpg'
 import Swal from 'sweetalert2'
+import { useHistory } from 'react-router'
 
 const Registro = ({caballo}) => {
-  // Extrar proyectos de state inicial
-  const caballosContext = useContext(caballoContext);
-  const { eliminarCaballo } = caballosContext;
-  // Array destructuring para extraer el proyecto actual
-  const caballoActual  =  caballo;
-  // Elimina un proyecto
+  const caballosContext = useContext(caballoContext)
+  const { eliminarCaballo, guardarCaballoActual  } = caballosContext
+  const caballoActual  =  caballo
+  const history = useHistory()
+
   const onClickEliminar = () => {
     Swal.fire({
       title: '¿Seguro que deseas eliminar?',
@@ -25,11 +25,15 @@ const Registro = ({caballo}) => {
       }
     })
   }
+  const seleccionarCaballo = caballo => {
+    guardarCaballoActual(caballo);
+    history.push(`/editar-registro/${caballo.nombre}`)
+  }
 
-  const { nombre, raza, capa, madre, padre, descripcion, fecha } = caballo
+  const { nombre, raza, capa, madre, padre, descripcion, fechaNacimiento } = caballo
 
   return (
-  <div className='card mb-3' style={{ max_width: '540px' }}>
+  <div className='card mb-3 sombra sombra-dark' style={{ max_width: '540px' }}>
     <div className='row g-0'>
       <div className='col-md-4'>
         <img src={img} className='img-fluid img-thumbnail' alt='...' />
@@ -55,9 +59,9 @@ const Registro = ({caballo}) => {
           </div>
           <h5 className='card-title'>Descripción:</h5>
           <p className='card-text'>{descripcion}</p>
-          <p className='card-text'><small className='text-muted'>{fecha}</small></p>
+          <p className='card-text'><small className='text-muted'>{fechaNacimiento}</small></p>
           <div className='d-flex justify-content-between'>
-            <button type='button' className='btn btn-primary btn-sm col-md-4'>Editar</button>
+            <button type='button' className='btn btn-primary btn-sm col-md-4' onClick={() => seleccionarCaballo(caballo)}>Editar</button>
             <button type='button' className='btn btn-danger btn-sm col-md-4' onClick={onClickEliminar}>Eliminar</button>
           </div>
         </div>
