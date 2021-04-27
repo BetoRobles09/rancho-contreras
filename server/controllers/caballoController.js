@@ -12,7 +12,7 @@ exports.crearCaballo = async (req, res) => {
     caballo.save();
     res.json(caballo);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).send('Error al crear el registro');
   }
 }

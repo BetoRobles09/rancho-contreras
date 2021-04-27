@@ -1,11 +1,19 @@
 import React, { useReducer } from 'react'
+import Swal from 'sweetalert2'
 import AuthContext from './authContext'
 import AuthReducer from './authReducer'
 
 import clienteAxios from '../../config/axios'
 import tokenAuth from '../../config/token'
 
-import { REGISTRO_EXITOSO, REGISTRO_ERROR, OBTENER_USUARIO, LOGIN_EXITOSO, LOGIN_ERROR, CERRAR_SESION } from '../../types'
+import {
+  REGISTRO_EXITOSO,
+  REGISTRO_ERROR,
+  OBTENER_USUARIO, 
+  LOGIN_EXITOSO, 
+  LOGIN_ERROR, 
+  CERRAR_SESION 
+} from '../../types'
 
 const AuthState = props => {
   const initialState = {
@@ -20,19 +28,28 @@ const AuthState = props => {
   const registrarUsuario = async datos => {
     try {
       const respuesta = await clienteAxios.post('/api/usuarios', datos)
-      console.log(respuesta.data);
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Se registró al usuario correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      })
       dispatch({
         type: REGISTRO_EXITOSO,
         payload: respuesta.data
-      });
-      // Obtener el usuario
-      usuarioAutenticado()
+      })
     } catch (error) {
-      console.log(error.response.data.msg)
+      console.error(error.response.data.msg)
       const alerta = {
         msg: error.response.data.msg,
-        categoria: 'alerta-error'
+        categoria: 'alert alert-danger'
       }
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un error al momento de crear el usuario'
+      })
       dispatch({
         type: REGISTRO_ERROR,
         payload: alerta
@@ -73,7 +90,7 @@ const AuthState = props => {
       console.log(error.response.data.msg)
       const alerta = {
         msg: error.response.data.msg,
-        categoria: 'alerta-error'
+        categoria: 'alert alert-danger'
       }
       dispatch({
         type: LOGIN_ERROR,
@@ -94,7 +111,6 @@ const AuthState = props => {
       autenticado: state.autenticado,
       usuario: state.usuario,
       mensaje: state.mensaje,
-      cargando: state.cargando,
       registrarUsuario,
       iniciarSesion,
       usuarioAutenticado,

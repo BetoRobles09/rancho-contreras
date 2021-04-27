@@ -1,8 +1,13 @@
 import React, { useState, useContext } from 'react'
+import Swal from 'sweetalert2'
 import caballoContext from '../../context/caballos/caballoContext'
+import alertaContext from '../../context/alertas/alertaContext'
 
 const NuevoRegistro = () => {
   const caballosContext = useContext(caballoContext)
+  const alertasContext = useContext(alertaContext)
+
+  const { alerta, mostrarAlerta } = alertasContext
   const { agregarCaballo } = caballosContext
 
   const [caballo, setCaballo] = useState({
@@ -26,13 +31,18 @@ const NuevoRegistro = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    // Validar el proyecto
     if(nombre === '' || raza === '' || capa === '' || padre === '' || madre === '' || fechaNacimiento === '' || descripcion === '') {
+      mostrarAlerta('Todos los campos son obligatorios', 'alert alert-danger')
       return
     }
-    // agregar al state
     agregarCaballo(caballo)
-    // Reiniciar el form
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'El registro se creó correctamente',
+      showConfirmButton: false,
+      timer: 1500
+    })
     setCaballo({
       nombre: '',
       raza: '',
@@ -50,6 +60,7 @@ const NuevoRegistro = () => {
         <div className='card'>
           <div className='card-body'>
             <h2 className='text-center mb-4 font-weight-bold'>Agregar un nuevo registro</h2>
+            { alerta ? ( <div className={`${alerta.categoria}`}> {alerta.msg} </div> )  : null }
             <form onSubmit={onSubmit}>
               <div className='form-group'>
                 <input type='text' className='form-control' placeholder='Nombre del caballo' name='nombre' value={nombre} onChange={onChange} />

@@ -16,15 +16,13 @@ export default (state, action) => {
       return {
         ...state,
         autenticado: true,
-        mensaje: null,
-        cargando: false
+        mensaje: null
       }
     case OBTENER_USUARIO: 
       return {
         ...state,
         autenticado: true,
-        usuario: action.payload, 
-        cargando: false
+        usuario: action.payload
       }
     case CERRAR_SESION:
     case LOGIN_ERROR:
@@ -35,8 +33,7 @@ export default (state, action) => {
         token: null,
         usuario: null,
         autenticado: null,
-        mensaje: action.payload, 
-        cargando: false
+        mensaje: action.payload
       }
     default:
       return state;

@@ -1,11 +1,13 @@
 import React, { useReducer } from 'react'
 import caballoContext from './caballoContext'
 import caballoReducer from './caballoReducer'
+
 import {
   OBTENER_CABALLOS,
   AGREGAR_CABALLO,
   CABALLO_ACTUAL,
-  ELIMINAR_CABALLO, 
+  ELIMINAR_CABALLO,
+  VALIDAR_FORMULARIO,
   CABALLO_ERROR
 } from '../../types'
 
@@ -14,13 +16,13 @@ import clienteAxios from '../../config/axios'
 const CaballoState = props => {
   const initialState = {
     caballos : [],
-    caballo: null, 
+    caballo: null,
+    errorformulario: false,
     mensaje: null
   }
-  // Dispatch para ejecutar las acciones
+
   const [state, dispatch] = useReducer(caballoReducer, initialState)
-  // Serie de funciones para el CRUD
-  // Obtener los proyectos
+
   const obtenerCaballos = async () => {
     try {
       const resultado = await clienteAxios.get('/api/caballos');
@@ -42,9 +44,7 @@ const CaballoState = props => {
   // Agregar nuevo proyecto
   const agregarCaballo = async caballo => {
     try {
-      const resultado = await clienteAxios.post('/api/caballos', caballo);
-      console.log(resultado);
-      // Insertar el proyecto en el state
+      const resultado = await clienteAxios.post('/api/caballos', caballo)
       dispatch({
         type: AGREGAR_CABALLO,
         payload: resultado.data
@@ -59,6 +59,11 @@ const CaballoState = props => {
         payload: alerta
       })
     }
+  }
+  const mostrarError = () => {
+    dispatch({
+      type: VALIDAR_FORMULARIO
+    })
   }
   // Selecciona el Proyecto que el usuario dio click
   const caballoActual = caballoId => {
@@ -92,10 +97,12 @@ const CaballoState = props => {
     value={{
       caballos: state.caballos,
       caballo: state.caballo,
+      errorformulario: state.errorformulario,
       mensaje: state.mensaje,
       obtenerCaballos,
       agregarCaballo,
       caballoActual,
+      mostrarError,
       eliminarCaballo
     }}
   >

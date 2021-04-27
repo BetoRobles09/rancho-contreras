@@ -9,11 +9,12 @@ const { check } = require('express-validator');
 router.post('/',
 	auth,
 		[
-      check('nombre', 'El nombre de la obra es obligatorio').not().isEmpty(),
-      check('cliente', 'El cliente es obligatorio').not().isEmpty(),
-      check('ubicacion', 'La ubicación es obligatoria').not().isEmpty(),
-      check('fechaInicio', 'La fecha de inicio es obligatoria').not().isEmpty(),
-      check('fechaFin', 'La fecha de fin es obligatoria').not().isEmpty()
+      check('nombre', 'El nombre del caballo obligatorio').not().isEmpty(),
+      check('raza', 'La raza es obligatoria').not().isEmpty(),
+      check('capa', 'La capa es obligatoria').not().isEmpty(),
+      check('madre', 'La madre del caballo es obligatoria').not().isEmpty(),
+      check('padre', 'El padre del caballo es obligatoria').not().isEmpty(),
+      check('fechaNacimiento', 'La fecha de nacimiento es obligatoria').not().isEmpty()
     ],
     caballoController.crearCaballo
 );

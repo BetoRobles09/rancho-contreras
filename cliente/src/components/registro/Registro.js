@@ -1,6 +1,7 @@
 import { useContext} from 'react'
 import caballoContext from '../../context/caballos/caballoContext'
 import img from '../../img/51253934_10156997144684710_4766564450381594624_n.jpg'
+import Swal from 'sweetalert2'
 
 const Registro = ({caballo}) => {
   // Extrar proyectos de state inicial
@@ -10,7 +11,19 @@ const Registro = ({caballo}) => {
   const caballoActual  =  caballo;
   // Elimina un proyecto
   const onClickEliminar = () => {
-    eliminarCaballo(caballoActual._id)
+    Swal.fire({
+      title: '¿Seguro que deseas eliminar?',
+      text: "No podrás revertir esto",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, elimínalo'
+    }).then((res) => {
+      if (res.isConfirmed) {
+        eliminarCaballo(caballoActual._id)
+      }
+    })
   }
 
   const { nombre, raza, capa, madre, padre, descripcion, fecha } = caballo

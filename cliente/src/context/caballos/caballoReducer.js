@@ -3,7 +3,8 @@ import {
   AGREGAR_CABALLO,
   CABALLO_ACTUAL,
   ELIMINAR_CABALLO, 
-  CABALLO_ERROR
+  CABALLO_ERROR,
+  VALIDAR_FORMULARIO,
 } from '../../types';
 
 // eslint-disable-next-line
@@ -18,6 +19,11 @@ export default (state, action) => {
       return {
         ...state,
         caballos: [...state.caballos, action.payload]
+      }
+    case VALIDAR_FORMULARIO:
+      return {
+        ...state, 
+        errorformulario: true
       }
     case CABALLO_ACTUAL:
       return {
