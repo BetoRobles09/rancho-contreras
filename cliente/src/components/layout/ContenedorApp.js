@@ -1,11 +1,23 @@
+import NavBar from './NavBar'
 import ListaRegistros from '../registro/ListaRegistros'
+import NuevoRegistro from '../registro/NuevoRegistro'
+import EditarRegistro from '../registro/EditarRegistro'
+import NuevaCuenta from '../auth/NuevaCuenta'
+
+import RutaPrivada from '../rutas/RutaPrivada'
+
 
 const ContenedorApp = () => {
   return (
-    <div className='container mt-3 p-2' >
-      <h1 className='text-center'><span>Yeguada Rancho</span> Los Contreras</h1>
-      <ListaRegistros />
-    </div>
+    <>
+      <NavBar />
+      <div className='container mt-3 p-2' >
+        <RutaPrivada exact path="/inicio" component={ListaRegistros} />
+        <RutaPrivada exact path="/nuevo-registro" component={NuevoRegistro} />
+        <RutaPrivada exact path="/editar-registro/:id" component={EditarRegistro} />
+        <RutaPrivada exact path="/nueva-cuenta" component={NuevaCuenta} />
+      </div>
+    </>
   )
 }
 

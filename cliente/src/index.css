@@ -50,6 +50,7 @@ h1, h3 {
   border-radius: 1rem;
 }
 
+.box input[type="text"],
 .box input[type="email"],
 .box input[type="password"] {
   border: 0;
@@ -72,6 +73,7 @@ h1, h3 {
   font-weight: 500
 }
 
+.box input[type="text"]:focus,
 .box input[type="email"]:focus,
 .box input[type="password"]:focus {
   width: 300px;
