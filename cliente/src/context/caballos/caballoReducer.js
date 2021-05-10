@@ -7,7 +7,8 @@ import {
   CABALLO_ERROR,
   ACTUALIZAR_CABALLO,
   CABALLO_ACTUALIZAR,
-  LIMPIAR_CABALLOS
+  LIMPIAR_CABALLOS,
+  PAGINATE
 } from '../../types';
 
 // eslint-disable-next-line
@@ -58,6 +59,11 @@ export default (state, action) => {
       return {
         ...state,
         mensaje: action.payload
+      }
+    case PAGINATE: 
+      return {
+        ...state,
+        currentPage: action.payload
       }
     default:
       return state;

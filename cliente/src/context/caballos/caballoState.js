@@ -11,7 +11,8 @@ import {
   CABALLO_ERROR,
   ACTUALIZAR_CABALLO,
   CABALLO_ACTUALIZAR,
-  LIMPIAR_CABALLOS
+  LIMPIAR_CABALLOS,
+  PAGINATE
 } from '../../types'
 
 import clienteAxios from '../../config/axios'
@@ -21,6 +22,9 @@ const CaballoState = props => {
     caballos : [],
     caballo: null,
     caballoActualizar: null,
+    currentPage: 1,
+    postPerPage: 5,
+    pageNumbers: [],
     errorformulario: false,
     mensaje: null
   }
@@ -45,6 +49,14 @@ const CaballoState = props => {
       })
     }
   }
+
+  const paginate = (pageNumber) => {
+    dispatch({
+      type: PAGINATE,
+      payload: pageNumber
+    })
+  }
+
   // Agregar nuevo proyecto
   const agregarCaballo = async caballo => {
     try {
@@ -104,7 +116,7 @@ const CaballoState = props => {
         payload: resultado.data.caballo
       })
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -127,6 +139,9 @@ const CaballoState = props => {
       caballos: state.caballos,
       caballo: state.caballo,
       caballoActualizar: state.caballoActualizar,
+      loading: state.loading,
+      currentPage: state.currentPage,
+      postPerPage: state.postPerPage,
       errorformulario: state.errorformulario,
       mensaje: state.mensaje,
       obtenerCaballos,
@@ -136,7 +151,8 @@ const CaballoState = props => {
       eliminarCaballo,
       actualizarCaballo,
       guardarCaballoActual,
-      limpiarCaballo
+      limpiarCaballo,
+      paginate
     }}
   >
     {props.children}

@@ -22,10 +22,13 @@ const CaballoSchema = new mongoose.Schema({
     required: true
   },
   fechaNacimiento: {
-    type: Date,
+    type: String,
     required: true
   },
   descripcion: {
+    type: String
+  },
+  imageURL: {
     type: String
   },
   creador: { 

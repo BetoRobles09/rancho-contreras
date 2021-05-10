@@ -17,10 +17,11 @@ const NuevoRegistro = () => {
     padre: '',
     madre: '',
     fechaNacimiento: '',
-    descripcion: ''
+    descripcion: 'Descripcion',
+    imageURL: ''
   });
 
-  const { nombre, raza, capa, padre, madre, fechaNacimiento, descripcion} = caballo
+  const { nombre, raza, capa, padre, madre, fechaNacimiento, descripcion, imageURL } = caballo
 
   const onChange = e => {
     setCaballo({
@@ -50,7 +51,8 @@ const NuevoRegistro = () => {
       padre: '',
       madre: '',
       fechaNacimiento: '',
-      descripcion: ''
+      descripcion: '',
+      imageURL: ''
     })
   }
 
@@ -86,7 +88,7 @@ const NuevoRegistro = () => {
                 <textarea className='form-control' name='descripcion' rows='5' value={descripcion} onChange={onChange} />
               </div>
               <div className='form-group'>
-                <input type='file' className='form-control-file' name='foto' aria-describedby='fileHelp' />
+                <input type='file' className='form-control-file' name='imageURL' value={imageURL} onChange={onChange} aria-describedby='fileHelp' />
                 <small id='fileHelp' className='form-text text-muted'>Selecciona una foto del caballo</small>
               </div>
               <button type='submit' className='btn btn-primary font-weight-bold text-uppercase d-block w-100'>Guardar</button>
